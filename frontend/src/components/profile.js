@@ -1,13 +1,18 @@
 import '../styles/profile.scss';
+import AuthContext from '../context/AuthContext';
+import { useContext } from 'react';
 
-const Profile = () => {
+const Profile = ({handleLogout}) => {
+    const userObj = useContext(AuthContext);
+    const {profileImg, name } = userObj;
     return (
         <div className="profile">
             <div className="img-container">
-                <img alt="profile" src="https://static.remove.bg/remove-bg-web/8be32deab801c5299982a503e82b025fee233bd0/assets/start-0e837dcc57769db2306d8d659f53555feb500b3c5d456879b9c843d1872e7baa.jpg" />
+                <img alt="profile" src={profileImg} />
             </div>
-            <div className="action-items">
-                login
+            {name}
+            <div className="action-items" onClick={handleLogout}>
+                <div className="logout">Logout</div>
             </div>
         </div>
     )

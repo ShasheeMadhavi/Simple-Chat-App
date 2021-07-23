@@ -6,8 +6,8 @@ const ChatForm = () => {
     return (
         <div className="chat-form">
             <div className="action-but{ton">
-                <FontAwesomeIcon icon={faSmile} />
-                <FontAwesomeIcon icon={faPaperclip} />
+                <FontAwesomeIcon icon={faSmile} className="icon-block" />
+                <FontAwesomeIcon icon={faPaperclip} className="icon-block" />
             </div>
             <input className="chat-input" placeholder="message" />
             <FontAwesomeIcon className="icon-block active" icon={faMicrophone} />

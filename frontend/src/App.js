@@ -7,12 +7,16 @@ import Login from './components/login';
 import { BASE_URL, LOGIN } from './utils/apiEndpoints';
 import { postRequest } from './utils/apiRequests';
 import { useState } from 'react';
-
+import { useCookies } from 'react-cookie';
+import AuthContext from './context/AuthContext';
 
 
 function App() {
+  const [cookies, setCookie, removeCookie] = useCookies(["chatapp"]);
   const [error, setError] = useState(null);
-  const [userObj, setUserObj] = useState(null);
+  const [userObj, setUserObj] = useState(() => {
+    return cookies.user;
+  });
 
     const handleLogin = async (userData) => {
       const formData = new FormData();
@@ -30,18 +34,25 @@ function App() {
         return false;
       }
 
+      setCookie("user", response);
       setUserObj(response);
       
     }
 
+    const handleLogout = () => {
+      removeCookie("user");
+      setUserObj(null);
+    }
+
   return (
     <>
-      {true ? (
+      {!(userObj && userObj.sessionId) ? (
         <Login handleLogin={handleLogin} />
       ) : (
+  <AuthContext.Provider value={userObj} >
     <div className="App">
       <div className="sidebar">
-        <Profile />
+        <Profile handleLogout={handleLogout}/>
         <Search />
         <ChatList />
       </div>
@@ -49,6 +60,7 @@ function App() {
         <ChatSection />
       </div>
     </div>
+  </AuthContext.Provider>
       )}
     </>
   );
