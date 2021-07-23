@@ -1,8 +1,6 @@
 const io = require('./../../server').io;
-const { addUsersToListRedis,
-     removeUsersFromListRedis, 
-} = require('./../models/hearbeat.model');
-const { saveChats } = require('./../models/commom.model');
+const { addUsersToListRedis, removeUsersFromListRedis} = require('./../models/heartbeat.model');
+const { saveChats } = require('./../models/common.model');
 
 const { getTime } = require('./../helper');
 
