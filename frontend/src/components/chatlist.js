@@ -1,28 +1,58 @@
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faChevronDown} from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChevronDown, faUser } from '@fortawesome/free-solid-svg-icons';
 import '../styles/chatlist.scss';
+import { shortFormatTime } from '../utils/helper';
+import { NavLink } from 'react-router-dom';
 
-const ChatList = () => {
+const ChatList = (friendsList) => {
+    console.log(friendsList);
+
+    const renderRecentMsg = (data) => {
+        let msg = "";
+        if(data.recentMsg && data.recentMsg.msg){
+            if(data.recentMsg.msg.type === "message"){
+                msg = data.recentMsg.msg.value;
+            }else if(data.recentMsg.msg.type === "file"){
+                msg = "Media shared";
+            }else if(data.recentMsg.msg.type === "typing"){
+                msg = <i style={{color: "#a7a7a7" }}>typing</i>;
+            }else{
+                msg = "";
+            }
+        }
+        return msg;
+    }
     return (
         <div className="chat-list">
-            <div className="chat-item">
+            {Object.keys(friendsList).map((key) => (
+                <NavLink key={key} className="note-card" to={`/${key}`}>
+              <div  className="chat-item">
                 <div className="img-container">
-                    <img alt="profile" src="https://static.remove.bg/remove-bg-web/8be32deab801c5299982a503e82b025fee233bd0/assets/start-0e837dcc57769db2306d8d659f53555feb500b3c5d456879b9c843d1872e7baa.jpg" />
-                </div>
+                    {friendsList[key].profileImg ?(
+                        <img 
+                        alt="profile" 
+                        src={friendsList[key].profileImg}
+                       />)
+                     : 
+                        <FontAwesomeIcon className="icon-block" icon={faUser} /> }
+                    
+                 </div>
                 <div className="chat-detail">
-                    <h4 className="chat-title">Sample User</h4>
-                    <p className="chat-description">Message body preview goes here!</p>
+                    <h4 className="chat-title">{friendsList[key].name}</h4>
+                    <p className="chat-description">{renderRecentMsg(friendsList[key])}</p>
                 </div>
-                <div className="timestamp">
-                    00:00 
+                <div className="time">
+                        {friendsList[key].recentMsg && shortFormatTime(friendsList[key].recentMsg.time)}
                 </div>
                 <div className="action-button">
                     <FontAwesomeIcon icon={faChevronDown} />
                 </div>
             </div>
-        </div>
-    )
-}
+            </NavLink>
+        ))}
+    </div>
+    );
+};
 
 export default ChatList;
 

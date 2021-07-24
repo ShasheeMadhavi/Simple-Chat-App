@@ -1,12 +1,12 @@
 const redisClient = require('./../config/redis');
 
-exports.addUserToListRadis = (key, subKey, value, cb) => {
+exports.addUsersToListRedis = (key, subKey, value, cb) => {
     redisClient.HMSET(key, subKey, JSON.stringify(value), (err, res) => {
         return cb(err, res);
     });
 };
 
-exports.removeUsersFromListRadis = (key, subKey) => {
+exports.removeUsersFromListRedis = (key, subKey) => {
     redisClient.HDEL(key, subKey);
 };
 

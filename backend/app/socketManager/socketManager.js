@@ -18,11 +18,11 @@ module.exports = (Socket) => {
                 updatedAt: currentTime,
                 _id
             };
-            // WC:user:OFF (delete the user from here)
-            removeUsersFromListRedis('Wc:user:OFF', sessionId);
-            // Wc:user:ON (add user here)
+
+            removeUsersFromListRedis(`WC:user:OFF`, sessionId);
+
             addUsersToListRedis(
-               'WC:user:ON',
+               `WC:user:ON`,
                sessionId,
                { time: currentTime },
                (e, r) => {
@@ -31,6 +31,7 @@ module.exports = (Socket) => {
                    Socket.sessionId = sessionId;
                    Socket.join(sessionId);
                    Socket.broadcast.emit("new-online-user", newUser);
+                   callback();
                }
             );
         });

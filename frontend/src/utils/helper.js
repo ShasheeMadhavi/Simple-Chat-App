@@ -7,3 +7,6 @@ export const formatDate = (timestamp) => {
 export const shortFormatTime = (timestamp) => {
     return moment(timestamp).format('hh:mm a');
 }
+
+
+

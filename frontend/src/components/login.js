@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
 import '../styles/login.scss';
 
-const Login = ({handleLogin}) => {
+const Login = ({ handleLogin }) => {
 
     const [user, setUser] = useState({
         name: "",

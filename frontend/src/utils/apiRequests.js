@@ -18,8 +18,8 @@ export const putRequest = async (url, payload = {}) => {
     return data;
 }
 
-export const getRequest = async (url, payload = {}) => {
-    const data = await axios.get(url, payload)
+export const getRequest = async (url) => {
+    const data = await axios.get(url)
         .then(resp => resp.data)
         .catch(err => (
             { error: err.response.data }
@@ -27,8 +27,8 @@ export const getRequest = async (url, payload = {}) => {
     return data;
 }
 
-export const deleteRequest = async (url, payload = {}) => {
-    const data = await axios.delete(url, payload)
+export const deleteRequest = async (url) => {
+    const data = await axios.delete(url)
         .then(resp => resp.data)
         .catch(err => (
             { error: err.response.data }

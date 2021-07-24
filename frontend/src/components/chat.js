@@ -1,23 +1,18 @@
 import '../styles/chat.scss';
+import ScrollBottom from "react-scroll-to-bottom";
+import{ shortFormatTime } from "../utils/helper";
 
-const Chat = () => {
+const Chat = ( { sessionId, friendName, chats }) => {
     return (
-        <div className="chat-section">
-            <div className="chat you">
-                <span className="name">user 1 </span>
-                <p className="msg">Hi!</p>
-                <span className="time">07:15 PM</span>
+        <ScrollBottom className="chat-section">
+            {chats.map((chat) => (
+                <div key={chat._id} className={`chat ${sessionId ? "you" : "me"}`}>
+                <span className="name">{friendName}</span>
+                <p className="msg">{chat.msg}</p>
+                <span className="time">{shortFormatTime(chat.time)}</span>
             </div>
-
-            <div className="chat me">
-                <span className="name">user 2 </span>
-                <p className="msg">This is message</p>
-                <span className="time">07:15 PM</span>
-            </div>
-            
-        </div>
-
-        
+            ))}     
+        </ScrollBottom>    
     )
 }
 

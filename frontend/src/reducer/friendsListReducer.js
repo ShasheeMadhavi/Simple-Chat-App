@@ -1,4 +1,4 @@
-const friendListReducer = (state, action) => {
+const friendsListReducer = (state, action) => {
     let draftState = { ...state };
     switch (action.type) {
         case "FRIENDS":
@@ -29,4 +29,4 @@ const friendListReducer = (state, action) => {
     }
 }
 
-export default friendListReducer;
+export default friendsListReducer;
