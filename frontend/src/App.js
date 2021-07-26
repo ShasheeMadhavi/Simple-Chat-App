@@ -136,27 +136,28 @@ function App() {
               <Router>
                 <div className="sidebar">
                   <Profile handleLogout={handleLogout}/>
-                    <Search />                        <ChatList friendList={friendList} />
-                      </div>
-                        <Switch>
-                          <Route path="/:id">
-                            <div className="body">
-                              <ChatSection 
-                                updateRecentMsg={updateRecentMsg}
-                                recentMsg={recentMsg}
-                                recentOnlineFriend={recentOnlineFriend}
-                                recentOfflineFriend={recentOfflineFriend}
-                                />
-                              </div>
-                            </Route>
-                          </Switch>
-                        </Router>
-                      </div>
-                    </SocketContext.Provider>
-                  </AuthContext.Provider>
-                )}
-              </>
-            );
-          }
+                  <Search />                        
+                  <ChatList friendList={friendList} />
+                </div>
+                <Switch>
+                  <Route path="/:id">
+                    <div className="body">
+                      <ChatSection 
+                        updateRecentMsg={updateRecentMsg}
+                        recentMsg={recentMsg}
+                        recentOnlineFriend={recentOnlineFriend}
+                        recentOfflineFriend={recentOfflineFriend}
+                      />
+                    </div>
+                  </Route>
+                </Switch>
+              </Router>
+            </div>
+            </SocketContext.Provider>
+          </AuthContext.Provider>
+        )}
+      </>
+    );
+  }
 
 export default App;

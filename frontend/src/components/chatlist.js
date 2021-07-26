@@ -4,8 +4,7 @@ import '../styles/chatlist.scss';
 import { shortFormatTime } from '../utils/helper';
 import { NavLink } from 'react-router-dom';
 
-const ChatList = (friendList) => {
-    console.log(friendList);
+const ChatList = ({friendList}) => {
 
     const renderRecentMsg = (data) => {
         let msg = "";
@@ -27,7 +26,7 @@ const ChatList = (friendList) => {
         <div className="chat-list">
             {Object.keys(friendList).map((key) => (
                 <NavLink key={key} className="note-card" to={`/${key}`}>
-                    <div  className="chat-item" key={key}>
+                    <div  className="chat-item">
                         <div className="img-container">
                          {friendList[key].profileImg ? (
                             <img alt="profile" src={friendList[key].profileImg}/>
