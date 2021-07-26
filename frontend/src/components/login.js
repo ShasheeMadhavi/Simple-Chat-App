@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
 import '../styles/login.scss';
 
+
 const Login = ({ handleLogin }) => {
 
     const [user, setUser] = useState({
@@ -38,11 +39,7 @@ const Login = ({ handleLogin }) => {
                     <FontAwesomeIcon className="icon-block" icon={faUser} />
                     <input placeholder="Your Name Here" type="text" name="name" onChange={(e) => handleNameChange(e)} />
                 </div>
-                <input 
-                    type="submit"
-                    className="profile-submit-btn"
-                    value="Join Now"
-                    />
+                <input type="submit" className="profile-submit" value="Join Now" />
             </form>
         </div>
     </div>

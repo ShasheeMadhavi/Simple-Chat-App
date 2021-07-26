@@ -1,13 +1,12 @@
 const io = require('./../../server').io;
-const { addUsersToListRedis, removeUsersFromListRedis} = require('./../models/heartbeat.model');
+const { addUsersToListRedis, removeUsersFromListRedis} = require('./../models/hearbeat.model');
 const { saveChats } = require('./../models/common.model');
-
 const { getTime } = require('./../helper');
 
-module.exports = (Socket) => {
+module.exports = (socket) => {
     try{
-        console.log("Connected");
-        Socket.on("join-user", (data, callback) => {
+        console.log("Connected!");
+        socket.on("join-user", (data, callback) => {
             const { createdAt, name, profileImg, sessionId, updatedAt, _id} = data;
             const currentTime = getTime();
             const newUser ={
@@ -27,16 +26,16 @@ module.exports = (Socket) => {
                { time: currentTime },
                (e, r) => {
                    if(e) return callback(e);
-                   console.log('new user join', r);
-                   Socket.sessionId = sessionId;
-                   Socket.join(sessionId);
-                   Socket.broadcast.emit("new-online-user", newUser);
+                   console.log("New User Joined!", r);
+                   socket.sessionId = sessionId;
+                   socket.join(sessionId);
+                   socket.broadcast.emit("new-online-user", newUser);
                    callback();
                }
             );
         });
 
-        Socket.on("send-msg", async (data, callback) => {
+        socket.on("send-msg", async (data, callback) => {
             const { senderId, receiverId, msg} = data;
             const chatObj = {
                 room: [receiverId, senderId],
@@ -50,7 +49,7 @@ module.exports = (Socket) => {
             callback(chatObj);
         });
 
-        Socket.on("user-typing", async (data, callback) => {
+        socket.on("user-typing", async (data, callback) => {
             const { senderId, receiverId, msg } = data;
             const chatObj = {
                 room: [receiverId, receiverId],
@@ -63,8 +62,8 @@ module.exports = (Socket) => {
             callback(data);
         });
 
-        Socket.on("disconnected", () => {
-            const { sessionId } = Socket;
+        socket.on("disconnect", () => {
+            const { sessionId } = socket;
             if(sessionId) {
                 removeUsersFromListRedis(`WC:user:ON`, sessionId);
                 const offlineUser = {
@@ -72,12 +71,16 @@ module.exports = (Socket) => {
                     sessionId
                 }
                 addUsersToListRedis(`WC:user:OFF`, sessionId, offlineUser, (e, r) => {
-                    console.log("user left", r);
+                    if(e) {
+                        throw new Error("offline status error!");
+                    }
+                    console.log("User Left", r);
                 });
-                Socket.broadcast.emit("new-offline-user", offlineUser)
+                socket.broadcast.emit("new-offline-user", offlineUser)
             }
         });
-    } catch(ex){
+
+    } catch (ex) {
         console.log(ex,message);
     }
-};
+}

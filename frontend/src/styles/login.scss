@@ -3,7 +3,7 @@
     align-items: center;
     justify-content: center;
     height: 100vh;
-    background: #eee;
+    background: #eeeeee;
     .logo{
         width: 120px;
         position: absolute;
@@ -22,7 +22,7 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        background: #fff;
+        background: #ffffff;
         position: relative;
         form{
             display: flex;
@@ -35,13 +35,13 @@
                 width: 150px;
                 height: 150px;
                 border-radius: 50%;
-                background: #ddd;
+                background: #dddddd;
                 display: flex;
                 align-items: center;
                 justify-content: center;
                 position: relative;
                 overflow: hidden;
-                box-shadow: 0 0 10px 0 #ddd;
+                box-shadow: 0 0 10px 0 #dddddd;
                 .file-upload{
                     position: absolute;
                     height: 150px;
@@ -51,7 +51,7 @@
                 }
                 .icon-block{
                     font-size: 50px;
-                    color: #fff;
+                    color: #ffffff;
                 }
             }
             .profile-name{
@@ -60,29 +60,29 @@
                 align-items: center;
                 justify-content: center;
                 position: relative;
-                color: #999;
+                color: #999999;
                 .icon-block{
                     position: absolute;
-                    left: 30px;
+                    left: 20px;
                 }
                 input{
                     font-size: 20px;
                     padding: 5px;
                     border-radius: 5px;
                     outline: none;
-                    border: 1px solid #ccc;
+                    border: 1px solid #cccccc;
                     width: calc(100% - 40px);
                     height: 40px;
                     text-align: center;
                 }
             }
-            .profile-submit-btn{
+            .profile-submit{
                 width: 200px;
                 height: 50px;
                 font-size: 20px;
                 border: none;
                 background: #fad7a0;
-                columns: #fff;
+                columns: #ffffff;
                 border-radius: 5px;
                 cursor: pointer;
             }

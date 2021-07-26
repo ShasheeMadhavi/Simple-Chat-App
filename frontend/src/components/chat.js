@@ -1,18 +1,37 @@
 import '../styles/chat.scss';
-import ScrollBottom from "react-scroll-to-bottom";
-import{ shortFormatTime } from "../utils/helper";
+import ScrollToBottom from 'react-scroll-to-bottom';
+import{ shortFormatTime } from '../utils/helper';
 
 const Chat = ( { sessionId, friendName, chats }) => {
+
+    const renderMsg = (msg) => {
+        if (msg.type === 'file') {
+            if (msg.theme === 'audio') {
+                return <audio src={msg.value} controls />
+            } else if(msg.theme === 'image') {
+                return <img alt="msg" style={{widows: "100px" }} src={msg.value} />
+            }
+        }
+        return msg.value;
+    };
     return (
-        <ScrollBottom className="chat-section">
+        <ScrollToBottom className="chat-section">
             {chats.map((chat) => (
-                <div key={chat._id} className={`chat ${sessionId ? "you" : "me"}`}>
-                <span className="name">{friendName}</span>
-                <p className="msg">{chat.msg}</p>
-                <span className="time">{shortFormatTime(chat.time)}</span>
+                <div key={chat._id} className={`chat ${sessionId === chat.senderId ? "you" : "me"}`}>
+                {sessionId === chat.senderId ? (
+                    <span className="name">
+                        {friendName}
+                    </span>
+                ) : null}
+                    <p className="message">
+                        {renderMsg(chat.msg)}
+                    </p>
+                <span className="time">
+                    {shortFormatTime(chat.time)}
+                </span>
             </div>
             ))}     
-        </ScrollBottom>    
+        </ScrollToBottom>    
     )
 }
 

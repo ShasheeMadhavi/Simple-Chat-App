@@ -21,9 +21,7 @@ const socket = io.connect("http://localhost:2000", {
   reconnection: true,
   reconnectionDelay: 500,
   reconnectionAttempts: 10,
-})
-
-
+});
 
 function App() {
   const [cookies, setCookie, removeCookie] = useCookies(["chatapp"]);
@@ -35,7 +33,7 @@ function App() {
     return cookies.user;
   });
 
-  const [friendsList, friendsListDispatch] = useReducer(
+  const [friendList, friendsListDispatch] = useReducer(
     friendsListReducer,
     initialState
   )
@@ -52,13 +50,13 @@ function App() {
       if(userData.file){
         formData.append("profileImg", userData.file, userData.file.name);
       }
+
       formData.append("payload", JSON.stringify({name: userData.name}));
 
       const response = await postRequest(`${BASE_URL}${LOGIN}`, formData);
-
       console.log(response);
 
-      if(response.error){
+      if(response.error) {
         setError(response.error);
         return false;
       }
@@ -79,7 +77,7 @@ function App() {
       const response = await getRequest(
         `${BASE_URL}${USER_LIST}/${userData.sessionId}`
       );
-      if(response.error){
+      if(response.error) {
         setError(response.error);
         return false;
       }
@@ -93,11 +91,9 @@ function App() {
         setRecentOnlineFriend(data);
       });
       socket.on("new-offline-user", (data) => {
-        setRecentOfflineFriend(data);
-        
+        setRecentOfflineFriend(data); 
       })
-    };
-
+    }
 
     const joinUser = (userData) => {
       let initData = {
@@ -107,61 +103,60 @@ function App() {
         sessionId: userData.sessionId,
         updatedAt: userData.updatedAt,
         _id: userData._id
-      }
+      };
 
-      socket.emit("join-user", initData, (cbData) => {
-        console.log("user joined");
-      })
+      socket.emit("join-user", initData, () => {
+        console.log("User Joined");
+      });
 
       socket.on("receive-msg", (data) => {
         console.log(data);
         updateRecentMsg(data);
         setRecentMsg(data);
-      })
+      });
 
       socket.on("user-typing", (data) => {
         console.log(data);
         updateRecentMsg(data);
-      })
-    }
+      });
+    };
 
     const updateRecentMsg = (data) => {
       friendsListDispatch({ type: "RECENT_MSG", payload: data });
-
-    }
+    };
 
   return (
     <>
-      {!(userObj && userObj.sessionId) ? (
-        <Login handleLogin={handleLogin} />
-      ) : (
-  <AuthContext.Provider value={userObj} >
-   <SocketContext.Provider value={socket}>
-    <div className="App">
-      <Router>
-      <div className="sidebar">
-        <Profile handleLogout={handleLogout}/>
-        <Search />
-        <ChatList friendsList={friendsList} />
-      </div>
-      <Switch>
-        <Route path="/:id">
-      <div className="body">
-        <ChatSection 
-          updateRecentMsg={updateRecentMsg}
-          recentMsg={recentMsg}
-          recentOnlineFriend={recentOnlineFriend}
-          recentOfflineFriend={recentOfflineFriend} />
-      </div>
-        </Route>
-      </Switch>
-    </Router>
-    </div>
-    </SocketContext.Provider>
-  </AuthContext.Provider>
-      )}
-    </>
-  );
-}
+    {!(userObj && userObj.sessionId) ? (
+      <Login handleLogin={handleLogin} />
+       ) : (
+        <AuthContext.Provider value={userObj} >
+          <SocketContext.Provider value={socket}>
+            <div className="App">
+              <Router>
+                <div className="sidebar">
+                  <Profile handleLogout={handleLogout}/>
+                    <Search />                        <ChatList friendList={friendList} />
+                      </div>
+                        <Switch>
+                          <Route path="/:id">
+                            <div className="body">
+                              <ChatSection 
+                                updateRecentMsg={updateRecentMsg}
+                                recentMsg={recentMsg}
+                                recentOnlineFriend={recentOnlineFriend}
+                                recentOfflineFriend={recentOfflineFriend}
+                                />
+                              </div>
+                            </Route>
+                          </Switch>
+                        </Router>
+                      </div>
+                    </SocketContext.Provider>
+                  </AuthContext.Provider>
+                )}
+              </>
+            );
+          }
 
 export default App;

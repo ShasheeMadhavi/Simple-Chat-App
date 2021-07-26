@@ -6,8 +6,9 @@
     .chat{
         line-height: 22px;
         padding: 15px;
-        background: #fff;
+        background: #ffffff;
         border-radius: 11px;
+        margin-bottom: 20px0;
         clear: both;
         min-width: 50px;
         position: relative;
@@ -20,8 +21,8 @@
             bottom: auto;
             border: 22px solid;
         }
-        .msg{
-            color: #000;
+        .message{
+            color: #000000;
             font-size: 15px;
             margin: 5px 0 15px 0;
         }
@@ -47,7 +48,6 @@
                 color: #36cd96;
             }
         }
-        
         &.me{
             float: right;
             margin-left: 10%;
@@ -57,6 +57,10 @@
                 left: auto;
                 right: -12px;
                 border-color: #dbf8c6 transparent transparent transparent;
+            }
+            .name{
+                font-weight: 500;
+                color: #36cd96;
             }
         }
     }

@@ -26,7 +26,9 @@ const friendsListReducer = (state, action) => {
             return draftState;
         default:
             return state;
+        }
+
     }
-}
+
 
 export default friendsListReducer;
