@@ -119,7 +119,7 @@ const ChatSection = ({updateRecentMsg, recentMsg, recentOnlineFriend, recentOffl
     return (
         <>
             <ChatHeader friendInfo={friendInfo} />
-            <Chat sessionId={paramId}friendName={friendInfo && friendInfo.name} chats={chats} />
+            <Chat sessionId={paramId} friendName={friendInfo && friendInfo.name} chats={chats} />
             <ChatForm  sendMsg={sendMsg} sendTyping={sendTyping} />
         </>
     )
